@@ -1,6 +1,6 @@
 # level00
 
-Since the SUID bit is set, the `level00` program will be executed with `level01`.
+Since the SUID bit is set, the `level00` program will be executed with the privileges of `level01`.
 
 ```bash
 level00@OverRide:~$ ls -l
@@ -8,7 +8,7 @@ total 8
 -rwsr-s---+ 1 level01 users 7280 Sep 10  2016 level00
 ```
 
-Let's start with a little `disas main` in `gdb`:
+Let's start with a little `disas main` in *pwndbg*:
 
 ```asm
    0x08048494 <+0>:     push   ebp
@@ -45,26 +45,26 @@ Let's start with a little `disas main` in `gdb`:
    0x0804851f <+139>:   ret
 ```
 
-First thing first, we can spot a call to `system` at _main+121_.
-An address is loaded in esp at _main+120_, let's inspect it:
+The first thing we notice is a call to  `system` at **main+121**.
+An address is loaded in `esp` at **main+120**. Let's inspect that address:
 
 ```gdb
 x/s 0x8048649
 0x8048649:      "/bin/sh"
 ```
 
-Bingo! Now we have to reach this call to `system`.
-The only protection is a comparaison between the hardcoded value `0x149c (0d5276)` and our scanf input at _main+83_.
+Bingo! Now we just need to reach this call to `system`.
+The only protection is a comparison at **main+83** between our input and the hardcoded value `0x149c` (decimal `5276`).
 
-All we need to do now is to run the program and enter `5276` as the password.
-Once we enter the shell, let's check who we are:
+All we need to do is run the program and enter `5276` as the password.
+ Once we enter the shell, we can check our privileges:
 
 ```bash
 $ whoami
 level01
 ```
 
-Great, now we can take our prize:
+Nice. Now we can claim our prize:
 
 ```bash
 $ cat /home/users/level01/.pass
