@@ -10,4 +10,5 @@ else
 fi
 
 mkdir -p "$level_name/Ressources"
-touch "$level_name/flag" "$level_name/source.c" "$level_name/walkthrough.md"
+touch "$level_name/flag" "$level_name/source.c" "$level_name/README.md"
+echo "# $1" > "$level_name/README.md"
