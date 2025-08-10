@@ -1,6 +1,6 @@
 # level04
 
-In this program, we have an unsafe `gets`` call used in the child process after a`fork`.
+In this program, we have an unsafe `gets` call used in the child process after a`fork`.
 Even though the program mentions shellcode, we’re going to try something else: a **ret2libc attack**.
 
 The concept is simple: we overwrite the return address (EIP) with the address of `system` and supply `/bin/sh` (or another command) as its argument. The attack requires:
