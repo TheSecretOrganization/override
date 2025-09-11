@@ -43,7 +43,7 @@ aaaa 10 0x61616161
 ...
 ```
 
-We want to overwrite the pointer at `0x080497e0`` with the address of our shellcode:`0xffffdc59`
+We want to overwrite the pointer at `0x080497e0` with the address of our shellcode:`0xffffdc59`
 We’ll write this using two half-word (%hn) writes, targeting:
 
 - `0x080497e0` → to write the lower 2 bytes: 0xdc59 → 56409
